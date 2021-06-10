@@ -1,4 +1,4 @@
-# ArduinoSnappyProto
+# SnappyProto
 
 This library ports 2 existing libraries internally as there were not Arduino versions of these libraries already
 
