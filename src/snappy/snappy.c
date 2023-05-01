@@ -452,7 +452,17 @@ static inline bool writer_append_from_self(struct writer *w, u32 offset,
 		unaligned_copy64(op - offset + 8, op + 8);
 	} else {
 		if (space_left >= len + kmax_increment_copy_overflow) {
+			// E.Welch had a lot of trouble when the object to be 
+			// decompressed exceeded more than say 70bytes, 
+			// ultimately found the fast path code seemed to deadlock
+			// or crash the stack or something, haven't been able
+			// to dig in yet so for now just disabling this optimization
+			// when compiling for ESP32. 
+			#if defined(ESP32)
+			incremental_copy(op - offset, op, len);
+			#else
 			incremental_copy_fast_path(op - offset, op, len);
+		    #endif
 		} else {
 			if (space_left < len) {
 				return false;

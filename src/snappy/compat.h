@@ -33,7 +33,8 @@
 #define le32toh letoh32
 #endif
 
-#if defined(__WIN32__) && defined(SG)
+// E.Welch 
+#if defined(SG)
 struct iovec {
 	void *iov_base;	/* Pointer to data.  */
 	size_t iov_len;	/* Length of data.  */
